@@ -1,0 +1,12 @@
+.ng-invalid.ng-touched {
+  border-bottom: 2px solid $danger-color;
+}
+input {
+  margin-bottom: 5px !important;
+}
+.input-field {
+  margin-bottom: 15px;
+}
+form .btn {
+  margin-left: 0;
+}

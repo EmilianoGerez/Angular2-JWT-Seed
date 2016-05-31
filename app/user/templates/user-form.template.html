@@ -1,0 +1,118 @@
+<div class="row" [class.zoomOut]="isSent" *ngIf="!isSent">
+  <div class="col-xs-12 col-md-6 col-md-offset-3">
+    <!--server error message-->
+    <div class="alert alert-danger" role="alert" *ngIf="errorMsg">
+      <strong>{{errorMsg.head}}</strong> {{errorMsg.msg}}
+    </div>
+
+    <div class="card card-block">
+      <h3>Signup Form</h3>
+      <hr>
+      <form [ngFormModel]="userForm" (ngSubmit)="onSubmit(userForm.value)">
+
+        <div class="md-form">
+          <input type="text" name="firstName"
+                 class="form-control"
+                 ngControl="firstName" #firstName="ngForm">
+          <label for="firstName">FirstName</label>
+          <!--error mssg-->
+          <div *ngIf="firstName.touched && firstName.errors">
+          <span *ngIf="firstName.errors.required"
+                class="text-danger">Firs Name is required
+          </span>
+          <span *ngIf="firstName.errors.minlength"
+                class="text-danger">Min length {{firstName.errors.minlength.requiredLength}}
+          </span>
+          </div>
+        </div>
+
+        <div class="md-form">
+          <input type="text" name="lastName"
+                 class="form-control"
+                 ngControl="lastName" #lastName="ngForm">
+          <label for="lastName">LastName</label>
+          <!--error mssg-->
+          <div *ngIf="lastName.touched && lastName.errors">
+          <span *ngIf="lastName.errors.required"
+                class="text-danger">Last Name is required
+          </span>
+          <span *ngIf="lastName.errors.minlength"
+                class="text-danger">Min length {{lastName.errors.minlength.requiredLength}}
+          </span>
+          </div>
+        </div>
+
+        <div class="md-form">
+          <label for="email">Email</label>
+          <input type="email" name="email"
+                 class="form-control"
+                 ngControl="email" #email="ngForm">
+          <!--error mssg-->
+          <div *ngIf="email.touched && email.errors">
+          <span *ngIf="email.errors.required"
+                class="text-danger">Email is required
+          </span>
+          <span *ngIf="email.errors.validEmail && !email.errors.required"
+                class="text-danger">Invalid email format
+          </span>
+          <span *ngIf="email.errors.emailUnique && !email.errors.validEmail"
+                class="text-danger">Email already taken
+          </span>
+          </div>
+        </div>
+
+        <div class="md-form">
+          <label for="password">Password</label>
+          <input type="password" name="password"
+                 class="form-control"
+                 ngControl="password" #password="ngForm">
+          <!--error mssg-->
+          <div *ngIf="password.touched && password.errors">
+          <span *ngIf="password.errors.required"
+                class="text-danger">Password is required
+          </span>
+          <span *ngIf="password.errors.minlength"
+                class="text-danger">Min length {{password.errors.minlength.requiredLength}}
+          </span>
+          <span *ngIf="password.errors.maxlength"
+                class="text-danger">Max length {{password.errors.maxlength.requiredLength}}
+          </span>
+          </div>
+        </div>
+
+        <div class="md-form">
+          <label for="repassword">Confirm password</label>
+          <input type="password" name="repassword"
+                 class="form-control"
+                 ngControl="repassword" #repassword="ngForm">
+          <!--error mssg-->
+          <div *ngIf="repassword.touched">
+            <span *ngIf="repassword.errors && repassword.errors.required"
+                  class="text-danger">Confirm password is required
+            </span>
+            <span *ngIf="userForm.errors && userForm.errors.passwordMatch"
+                  class="text-danger">Password does not match
+            </span>
+          </div>
+        </div>
+
+        <button class="btn btn-primary pull-right" type="submit"
+                [disabled]="!userForm.valid">Submit
+        </button>
+        <h4 *ngIf="sending" class="text-xs-center"><i class="fa fa-refresh fa-spin"></i> Sending</h4>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="row animated slideInUp" *ngIf="isSent">
+  <div class="col-xs-12 col-md-6 col-md-offset-3">
+    <div class="card card-block">
+      <h3 class="text-xs-center text-primary">
+        <i class="fa fa-envelope-o fa-4x" aria-hidden="true"></i>
+      </h3>
+      <h4 class="text-xs-center font-weight-bold">Activation email sent!!</h4>
+      <p class="text-xs-center">Please, check your email account and complete the activation process.</p>
+    </div>
+  </div>
+</div>

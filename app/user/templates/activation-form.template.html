@@ -1,0 +1,45 @@
+<div class="row animated" [class.zoomOut]="isActivated" *ngIf="!isActivated">
+  <div class="col-xs-12 col-md-6 col-md-offset-3">
+    <div class="alert alert-danger" role="alert" *ngIf="errorMsg">
+      <strong>{{errorMsg.head}}</strong> {{errorMsg.msg}}
+    </div>
+    <div class="card card-block">
+      <h3 class="text-center">Account activation</h3>
+      <hr>
+      <form [ngFormModel]="activationForm" (ngSubmit)="onSubmit(activationForm.value)">
+
+        <div class="md-form">
+          <textarea name="code" id="code"
+                    class="md-textarea" [disabled]="disabledInput"
+                    [(ngModel)]="codeModel" ngControl="code" #code="ngForm">
+          </textarea>
+          <label for="code">Code</label>
+          <!--error mssg-->
+          <div *ngIf="code.touched && code.errors">
+          <span for="code" *ngIf="code.errors.required"
+                class="text-danger">code is required
+          </span>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary pull-xs-right"
+                [disabled]="!activationForm.valid" *ngIf="!sending">
+          Confirm
+        </button>
+        <h4 *ngIf="sending"><i class="fa fa-refresh fa-spin"></i> Sending</h4>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="row animated slideInUp" *ngIf="isActivated">
+  <div class="col-xs-12 col-md-6 col-md-offset-3">
+    <div class="card card-block">
+      <h3 class="text-xs-center text-success">
+        <i class="fa fa-check-circle-o fa-4x" aria-hidden="true"></i>
+      </h3>
+      <h4 class="text-xs-center font-weight-bold">Account activated!!</h4>
+      <p class="text-xs-center">Please navigate to the <a [routerLink]="['Login']">Login page</a> and login.</p>
+    </div>
+  </div>
+</div>

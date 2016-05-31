@@ -1,0 +1,37 @@
+<!-- Error Messages -->
+<div class="alert alert-danger" role="alert" *ngIf="errorMsg">
+  <strong>{{errorMsg.head}}</strong> {{errorMsg.msg}}
+</div>
+<!-- Success Messages -->
+<div class="alert alert-success" role="alert" *ngIf="successMsg">
+  <strong>{{successMsg.head}}</strong> {{successMsg.msg}}
+</div>
+
+<table class="table">
+  <tbody>
+  <tr *ngFor="let session of userData.sessions">
+    <td>
+      <span [ngSwitch]="session.os.substr(0, 4).toLowerCase()">
+        <p *ngSwitchWhen="'wind'"><i class="fa fa-windows fa-3x text-primary" aria-hidden="true"></i></p>
+        <p *ngSwitchWhen="'andr'"><i class="fa fa-android fa-3x" aria-hidden="true"></i></p>
+        <p *ngSwitchWhen="'appl'"><i class="fa apple fa-3x" aria-hidden="true"></i></p>
+        <p *ngSwitchDefault><i class="fa fa-question-circle fa-3x" aria-hidden="true"></i></p>
+      </span>
+    </td>
+    <td>
+      <ul>
+        <li><strong>Operative System:</strong> {{session.os}}</li>
+        <li><strong>Browser:</strong> {{session.browser}}</li>
+        <li><strong>Device MAC:</strong> {{session.device}}</li>
+      </ul>
+    </td>
+    <td>
+      <button class="btn btn-danger-outline btn-sm pull-md-right"
+              (click)="closeSession(session)">
+        Close Session
+      </button>
+      <h4 *ngIf="isClosing" class="text-xs-center"><i class="fa fa-refresh fa-spin"></i> Closing..</h4>
+    </td>
+  </tr>
+  </tbody>
+</table>

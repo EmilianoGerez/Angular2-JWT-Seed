@@ -1,0 +1,140 @@
+<!-- Error Messages -->
+<div class="alert alert-danger" role="alert" *ngIf="errorMsg">
+  <strong>{{errorMsg.head}}</strong> {{errorMsg.msg}}
+</div>
+<!-- Success Messages -->
+<div class="alert alert-success" role="alert" *ngIf="successMsg">
+  <strong>{{successMsg.head}}</strong> {{successMsg.msg}}
+</div>
+
+<table class="table">
+  <tbody>
+  <!-- display name-->
+  <tr>
+    <td>{{currentUser.firstName}} {{currentUser.lastName}}</td>
+    <td class="text-xs-right">
+      <a (click)="nameEdit = !nameEdit">
+        <i *ngIf="!nameEdit" class="fa fa-pencil" aria-hidden="true"></i>
+        <i *ngIf="nameEdit" class="fa fa-caret-up" aria-hidden="true"></i>
+      </a>
+    </td>
+  </tr>
+  <!-- updaten name form -->
+  <tr *ngIf="nameEdit">
+    <td colspan="2" class="blue-grey lighten-5">
+      <form [ngFormModel]="updateNameForm" (ngSubmit)="update()">
+        <div class="md-form">
+          <input type="text" name="firstName" id="firstName"
+                 class="form-control" placeholder="{{currentUser.firstName}}"
+                 [(ngModel)]="userData.firstName" ngControl="firstName" #firstName="ngForm">
+          <label for="firstName" class="active">FirstName</label>
+          <!--error mssg-->
+          <div *ngIf="firstName.touched && firstName.errors">
+          <span *ngIf="firstName.errors.required"
+                class="text-danger">First Name is required
+          </span>
+          <span *ngIf="firstName.errors.minlength"
+                class="text-danger">Min length {{firstName.errors.minlength.requiredLength}}
+          </span>
+          </div>
+        </div>
+
+        <div class="md-form">
+          <input type="text" name="lastName"
+                 class="form-control" placeholder="{{currentUser.lastName}}"
+                 [(ngModel)]="userData.lastName" ngControl="lastName" #lastName="ngForm">
+          <label for="lastName" class="active">LastName</label>
+          <!--error mssg-->
+          <div *ngIf="lastName.touched && lastName.errors">
+          <span *ngIf="lastName.errors.required"
+                class="text-danger">Last Name is required
+          </span>
+          <span *ngIf="lastName.errors.minlength"
+                class="text-danger">Min length {{lastName.errors.minlength.requiredLength}}
+          </span>
+          </div>
+        </div>
+
+        <button class="btn btn-primary pull-right" type="submit"
+                [disabled]="!updateNameForm.valid">Save Changes
+        </button>
+      </form>
+    </td>
+  </tr>
+
+  <!-- update password -->
+  <tr>
+    <td>Password</td>
+    <td class="text-xs-right">
+      <a (click)="passEdit = !passEdit">
+        <i *ngIf="!passEdit" class="fa fa-pencil" aria-hidden="true"></i>
+        <i *ngIf="passEdit" class="fa fa-caret-up" aria-hidden="true"></i>
+      </a>
+    </td>
+  </tr>
+  <tr *ngIf="passEdit">
+    <td colspan="2" class="blue-grey lighten-5">
+      <form [ngFormModel]="updatePassForm" (ngSubmit)="update()">
+
+        <div class="md-form">
+          <label for="oldPassword">Actual password</label>
+          <input type="password" name="oldPassword"
+                 class="form-control"
+                 [(ngModel)]="userData.oldPassword" ngControl="oldPassword" #oldPassword="ngForm">
+          <!--error mssg-->
+          <div *ngIf="oldPassword.touched && oldPassword.errors">
+          <span *ngIf="oldPassword.errors.required"
+                class="text-danger">Actual password is required
+          </span>
+          <span *ngIf="oldPassword.errors.minlength"
+                class="text-danger">Min length {{oldPassword.errors.minlength.requiredLength}}
+          </span>
+          <span *ngIf="oldPassword.errors.maxlength"
+                class="text-danger">Max length {{oldPassword.errors.maxlength.requiredLength}}
+          </span>
+          </div>
+        </div>
+
+        <div class="md-form">
+          <label for="password">Password</label>
+          <input type="password" name="password"
+                 class="form-control"
+                 [(ngModel)]="userData.password" ngControl="password" #password="ngForm">
+          <!--error mssg-->
+          <div *ngIf="password.touched && password.errors">
+          <span *ngIf="password.errors.required"
+                class="text-danger">Password is required
+          </span>
+          <span *ngIf="password.errors.minlength"
+                class="text-danger">Min length {{password.errors.minlength.requiredLength}}
+          </span>
+          <span *ngIf="password.errors.maxlength"
+                class="text-danger">Max length {{password.errors.maxlength.requiredLength}}
+          </span>
+          </div>
+        </div>
+
+        <div class="md-form">
+          <label for="repassword">Confirm password</label>
+          <input type="password" name="repassword"
+                 class="form-control"
+                 ngControl="repassword" #repassword="ngForm">
+          <!--error mssg-->
+          <div *ngIf="repassword.touched">
+            <span *ngIf="repassword.errors && repassword.errors.required"
+                  class="text-danger">Confirm password is required
+            </span>
+            <span *ngIf="updatePassForm.errors && updatePassForm.errors.passwordMatch"
+                  class="text-danger">Password does not match
+            </span>
+          </div>
+        </div>
+
+        <button class="btn btn-primary pull-right" type="submit"
+                [disabled]="!updatePassForm.valid">Change Password
+        </button>
+      </form>
+    </td>
+  </tr>
+  </tbody>
+</table>

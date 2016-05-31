@@ -1,0 +1,80 @@
+<div class="row animated" [class.zoomOut]="isReset" *ngIf="!isReset">
+  <div class="col-xs-12 col-md-6 col-md-offset-3">
+    <div class="alert alert-danger" role="alert" *ngIf="errorMsg">
+      <strong>{{errorMsg.head}}</strong> {{errorMsg.msg}}
+    </div>
+    <div class="card card-block">
+      <h3 class="text-center">Account activation</h3>
+      <hr>
+      <form [ngFormModel]="resetForm" (ngSubmit)="onSubmit(resetForm.value)">
+
+        <div class="md-form">
+          <textarea name="code" id="code"
+                    class="md-textarea" [disabled]="disabledInput"
+                    [(ngModel)]="codeModel" ngControl="code" #code="ngForm">
+          </textarea>
+          <label for="code">Code</label>
+          <!--error mssg-->
+          <div *ngIf="code.touched && code.errors">
+          <span for="code" *ngIf="code.errors.required"
+                class="text-danger">code is required
+          </span>
+          </div>
+        </div>
+
+        <div class="md-form">
+          <label for="password">Password</label>
+          <input type="password" name="password"
+                 class="form-control"
+                 ngControl="password" #password="ngForm">
+          <!--error mssg-->
+          <div *ngIf="password.touched && password.errors">
+          <span *ngIf="password.errors.required"
+                class="text-danger">Password is required
+          </span>
+          <span *ngIf="password.errors.minlength"
+                class="text-danger">Min length {{password.errors.minlength.requiredLength}}
+          </span>
+          <span *ngIf="password.errors.maxlength"
+                class="text-danger">Max length {{password.errors.maxlength.requiredLength}}
+          </span>
+          </div>
+        </div>
+
+        <div class="md-form">
+          <label for="repassword">Confirm password</label>
+          <input type="password" name="repassword"
+                 class="form-control"
+                 ngControl="repassword" #repassword="ngForm">
+          <!--error mssg-->
+          <div *ngIf="repassword.touched">
+            <span *ngIf="repassword.errors && repassword.errors.required"
+                  class="text-danger">Confirm password is required
+            </span>
+            <span *ngIf="resetForm.errors && resetForm.errors.passwordMatch"
+                  class="text-danger">Password does not match
+            </span>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary pull-xs-right"
+                [disabled]="!resetForm.valid" *ngIf="!sending">
+          Change password
+        </button>
+        <h4 *ngIf="sending"><i class="fa fa-refresh fa-spin"></i> Sending</h4>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="row animated slideInUp" *ngIf="isReset">
+  <div class="col-xs-12 col-md-6 col-md-offset-3">
+    <div class="card card-block">
+      <h3 class="text-xs-center text-success">
+        <i class="fa fa-unlock-alt fa-4x" aria-hidden="true"></i>
+      </h3>
+      <h4 class="text-xs-center font-weight-bold">Password changed!!</h4>
+      <p class="text-xs-center">Please navigate to the <a [routerLink]="['Login']">Login page</a> and login.</p>
+    </div>
+  </div>
+</div>

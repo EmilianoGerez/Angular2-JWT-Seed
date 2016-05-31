@@ -1,0 +1,71 @@
+<div class="row" *ngIf="!needsActivation">
+  <div class="col-xs-12 col-md-6 col-md-offset-3">
+
+    <div class="alert alert-danger" role="alert" *ngIf="errorMsg">
+      <strong>{{errorMsg.head}}</strong> {{errorMsg.msg}}
+    </div>
+
+    <div class="card card-block">
+      <h3>Login Form</h3>
+      <hr>
+      <form [ngFormModel]="loginForm" (ngSubmit)="onSubmit(loginForm.value)">
+
+        <div class="md-form">
+          <input type="email" name="email" id="email"
+                 class="form-control"
+                 ngControl="email" #email="ngForm">
+          <label for="email">Email</label>
+          <!--error mssg-->
+          <div *ngIf="email.touched && email.errors">
+          <span for="email" *ngIf="email.errors.required"
+                class="text-danger">email is required
+          </span>
+          <span *ngIf="email.errors.validEmail && !email.errors.required"
+                class="text-danger text-muted">invalid email format
+          </span>
+          </div>
+        </div>
+
+        <div class="md-form">
+          <input type="password" name="password"
+                 class="form-control"
+                 ngControl="password" #password="ngForm">
+          <label for="password">Password</label>
+          <!--error mssg-->
+          <div *ngIf="password.touched && password.errors">
+          <span *ngIf="password.errors.required"
+                class="text-danger">Password is required
+          </span>
+          <span *ngIf="password.errors.minlength"
+                class="text-danger">Min length {{password.errors.minlength.requiredLength}}
+          </span>
+          <span *ngIf="password.errors.maxlength"
+                class="text-danger">Max length {{password.errors.maxlength.requiredLength}}
+          </span>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block"
+                [disabled]="!loginForm.valid">Log in
+        </button>
+
+        <a [routerLink]="['Forgot']" class="btn-block btn-link text-xs-center">Forgot your password?</a>
+      </form>
+    </div>
+
+  </div>
+</div>
+
+<div class="row animated slideInUp" *ngIf="needsActivation">
+  <div class="col-xs-12 col-md-6 col-md-offset-3">
+    <div class="card card-block">
+      <h3 class="text-xs-center text-danger">
+        <i class="fa fa-user-times fa-4x" aria-hidden="true"></i>
+      </h3>
+      <h4 class="text-xs-center font-weight-bold">Your account is not activated</h4>
+      <p class="text-xs-center">Please, check your email account for complete the activation or navigate to the <a
+        [routerLink]="['SendActivation']">Resend email activation page</a> and complete the activation
+        process.</p>
+    </div>
+  </div>
+</div>

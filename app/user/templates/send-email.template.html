@@ -1,0 +1,49 @@
+<div class="row animated" [class.zoomOut]="isSent" *ngIf="!isSent">
+  <div class="col-xs-12 col-md-6 col-md-offset-3">
+    <!--server error message-->
+    <div class="alert alert-danger" role="alert" *ngIf="errorMsg">
+      <strong>{{errorMsg.head}}</strong> {{errorMsg.msg}}
+    </div>
+
+    <div class="card card-block">
+      <h3 class="text-center">{{formTitle}}</h3>
+      <hr>
+      <form [ngFormModel]="sendEmailForm" (ngSubmit)="onSubmit(sendEmailForm.value)">
+
+        <div class="md-form">
+          <input type="email" name="email" id="email"
+                 class="form-control"
+                 ngControl="email" #email="ngForm">
+          <label for="email">Email</label>
+          <!--error mssg-->
+          <div *ngIf="email.touched && email.errors">
+          <span for="email" *ngIf="email.errors.required"
+                class="text-danger">email is required
+          </span>
+          <span *ngIf="email.errors.validEmail && !email.errors.required"
+                class="text-danger text-muted">invalid email format
+          </span>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary pull-xs-right"
+                [disabled]="!sendEmailForm.valid" *ngIf="!sending">
+          Confirm
+        </button>
+        <h4 *ngIf="sending" class="text-xs-center"><i class="fa fa-refresh fa-spin"></i> Sending</h4>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="row animated slideInUp" *ngIf="isSent">
+  <div class="col-xs-12 col-md-6 col-md-offset-3">
+    <div class="card card-block">
+      <h3 class="text-xs-center text-primary">
+        <i class="fa fa-envelope-o fa-4x" aria-hidden="true"></i>
+      </h3>
+      <h4 class="text-xs-center font-weight-bold">Email sent!!</h4>
+      <p class="text-xs-center">Please, check your email account and complete the {{processName}} process.</p>
+    </div>
+  </div>
+</div>

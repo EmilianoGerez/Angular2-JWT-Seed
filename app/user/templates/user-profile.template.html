@@ -1,0 +1,35 @@
+<div class="col-xs-12 col-md-4">
+  <div class="card testimonial-card">
+    <!--Bacground color-->
+    <div class="card-up bg-primary">
+    </div>
+    <div class="avatar"><img src="http://mdbootstrap.com/wp-content/uploads/2015/10/avatar-2.jpg"
+                             class="img-circle img-responsive">
+    </div>
+    <div class="">
+      <!--Name-->
+      <h4 class="card-title text-xs-center">{{user.firstName}} {{user.lastName}}</h4>
+      <!--Quotation-->
+      <div class="list-group">
+        <a (click)="setSection('Profile')" class="list-group-item">Profile</a>
+        <a (click)="setSection('Sessions')" class="list-group-item">Sessions</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-xs-12 col-md-8">
+  <div class="card">
+    <h3 class="card-header bg-primary">{{profileSection}}</h3>
+    <div class="card-block">
+      <!-- profile section content -->
+      <div *ngIf="profileSection === 'Profile'">
+        <user-data [currentUser]="user"></user-data>
+      </div>
+      <!-- sessions section content -->
+      <div *ngIf="profileSection === 'Sessions'">
+        <session-list [userData]="user"></session-list>
+      </div>
+    </div>
+  </div>
+</div>
